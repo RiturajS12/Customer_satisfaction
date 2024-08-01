@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Form</title>
+    <link rel="stylesheet" href="/static/project.css">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h2>Customer Satisfaction Form</h2>
+            <form action="/submit_form" method="POST">
+                <div class="form-group">
+                    <label for="age">Age</label>
+                    <input type="number" id="age" name="age" required>
+                </div>
+                <div class="form-group">
+                    <label for="flight-distance">Flight Distance</label>
+                    <input type="number" id="flight-distance" name="flight_distance" required>
+                </div>
+                <div class="form-group">
+                    <label for="inflight-entertainment">Inflight Entertainment</label>
+                    <select id="inflight-entertainment" name="inflight_entertainment" required>
+                        <option value="">Select</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="baggage-handling">Baggage Handling</label>
+                    <select id="baggage-handling" name="baggage_handling" required>
+                        <option value="">Select</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="cleanliness">Cleanliness</label>
+                    <select id="cleanliness" name="cleanliness" required>
+                        <option value="">Select</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="departure-delay">Departure Delay (minutes)</label>
+                    <input type="number" id="departure-delay" name="departure_delay" required>
+                </div>
+                <div class="form-group">
+                    <label for="arrival-delay">Arrival Delay (minutes)</label>
+                    <input type="number" id="arrival-delay" name="arrival_delay" required>
+                </div>
+                <div class="form-group">
+                    <label>Gender</label>
+                    <div class="radio-group">
+                        <label class="inline"><input type="radio" name="gender" value="Male" required> Male</label>
+                        <label class="inline"><input type="radio" name="gender" value="Female" required> Female</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Customer Type</label>
+                    <div class="radio-group">
+                        <label class="inline"><input type="radio" name="customer_type" value="Loyal Customer" required> Loyal Customer</label>
+                        <label class="inline"><input type="radio" name="customer_type" value="Disloyal Customer" required> Disloyal Customer</label>
+                    </div>
+                    <div class="form-group">
+                        <label>Class</label>
+                        <div class="radio-group">
+                            <label class="inline"><input type="radio" name="Class" value="Eco Plus" required> Eco Plus</label>
+                            <label class="inline"><input type="radio" name="Class" value="Business" required> Business</label>
+                            <label class="inline"><input type="radio" name="Class" value="Eco" required> Eco</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Type of Travel</label>
+                    <div class="radio-group">
+                        <label class="inline"><input type="radio" name="type_of_travel" value="Personal Travel" required> Personal Travel</label>
+                        <label class="inline"><input type="radio" name="type_of_travel" value="Business Travel" required> Business Travel</label>
+                    </div>
+                </div>
+                <button type="submit" class="btn-submit">Submit</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
