@@ -44,10 +44,7 @@ def prediction():
         prediction = model.predict(UNSEEN_DATA)[0]
         print(prediction)
         labels = {'1':"SATISFIED",'0':"DISATISFIED"}
-        return labels[str(prediction)]
-        # return render_template('output.html',output=labels[str(prediction)])
-
-
+        return render_template('output.html',output=labels[str(prediction)])
 
 
 if __name__ == "__main__":
