@@ -16,7 +16,7 @@ def index():
 def project_form():
     return render_template('project.html')
 
-@app.route('/submit_form', methods=['POST'])
+@app.route('/submit_form', methods=['GET','POST'])
 def submit_form():
     if request.method == 'POST':
         age = request.form['age']
