@@ -6,12 +6,48 @@
     <title>Prediction Result</title>
     <link rel="stylesheet" href="/static/project.css">
 </head>
+<style>
+    body{
+        font-family:cursive;
+        font-size:27px;
+    }
+    .pred{
+        font-family: "GrandSlang-Roman";
+        color: #F7B267;
+        font-size: 30px;
+        text-decoration: underline;
+    }
+    a{
+        color: black;
+        text-decoration: overline;
+    }
+    a:hover{
+        color: aliceblue;
+        text-decoration: line-through;
+    }
+</style>
 <body>
     <div class="container">
         <div class="card">
             <h2>Prediction Result</h2>
-            <p class="result">The customer satisfaction prediction is: <strong>{{ output }}</strong></p>
-            <a href="{{ url_for('project_form') }}" class="btn-back">Back to Form</a>
+            <p><strong>Your Inputs:</strong></p>
+            <ul>
+                <li><strong>Age:</strong> {{ age }}</li>
+                <li><strong>Flight Distance:</strong> {{ flight_distance }}</li>
+                <li><strong>Inflight Entertainment:</strong> {{ inflight_entertainment }}</li>
+                <li><strong>Baggage Handling:</strong> {{ baggage_handling }}</li>
+                <li><strong>Cleanliness:</strong> {{ cleanliness }}</li>
+                <li><strong>Departure Delay:</strong> {{ departure_delay }}</li>
+                <li><strong>Arrival Delay:</strong> {{ arrival_delay }}</li>
+                <li><strong>Gender:</strong> {{ gender }}</li>
+                <li><strong>Customer Type:</strong> {{ customer_type }}</li>
+                <li><strong>Class:</strong> {{ class_type }}</li>
+                <li><strong>Type of Travel:</strong> {{ travel_type }}</li>
+            </ul>
+            <div class="pred">
+            <p><strong>Prediction:</strong> {{ output }}</p>
+            </div>
+            <a href="/project_form">Go Back</a>
         </div>
     </div>
 </body>

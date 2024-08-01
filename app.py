@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request
 import sqlite3
 import joblib
 
@@ -78,7 +78,23 @@ def submit_form():
 
         prediction = model.predict([latest_data_values])[0]
         labels = {'1': 'SATISFIED', '0': 'DISSATISFIED'}
-        return render_template('output.html', output=labels[str(prediction)])
+
+        return render_template(
+            'output.html',
+            output=labels[str(prediction)],
+            age=age,
+            flight_distance=flight_distance,
+            inflight_entertainment=inflight_entertainment,
+            baggage_handling=baggage_handling,
+            cleanliness=cleanliness,
+            departure_delay=departure_delay,
+            arrival_delay=arrival_delay,
+            gender='Male' if gender == 1 else 'Female',
+            customer_type='Loyal Customer' if customer_type == 0 else 'Disloyal Customer',
+            class_type=class_type,
+            travel_type='Personal Travel' if travel_type == 1 else 'Business Travel'
+        )
+
 
 if __name__ == '__main__':
     app.run(debug=True)
