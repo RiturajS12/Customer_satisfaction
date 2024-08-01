@@ -1,10 +1,13 @@
 from flask import Flask, render_template, request, redirect, url_for
 import sqlite3
+import joblib
 
 app = Flask(__name__)
 
+model = joblib.load('logistic_Regression.lb')
+
 def get_db_connection():
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect('customer_satisfaction.db')
     conn.row_factory = sqlite3.Row
     return conn
 
@@ -16,31 +19,66 @@ def index():
 def project_form():
     return render_template('project.html')
 
-@app.route('/submit_form', methods=['GET','POST'])
+@app.route('/submit_form', methods=['POST'])
 def submit_form():
     if request.method == 'POST':
-        age = request.form['age']
-        flight_distance = request.form['flight_distance']
-        inflight_entertainment = request.form['inflight_entertainment']
-        baggage_handling = request.form['baggage_handling']
-        cleanliness = request.form['cleanliness']
-        departure_delay = request.form['departure_delay']
-        arrival_delay = request.form['arrival_delay']
-        gender = request.form['gender']
-        customer_type = request.form['customer_type']
-        class_ = request.form['Class']
-        type_of_travel = request.form['type_of_travel']
+        age = int(request.form['age'])
+        flight_distance = int(request.form['flight_distance'])
+        inflight_entertainment = int(request.form['inflight_entertainment'])
+        baggage_handling = int(request.form['baggage_handling'])
+        cleanliness = int(request.form['cleanliness'])
+        departure_delay = int(request.form['departure_delay'])
+        arrival_delay = int(request.form['arrival_delay'])
+        gender = int(request.form['gender'])
+        customer_type = int(request.form['customer_type'])
+        travel_type = int(request.form['type_of_travel'])
+        class_type = request.form['Class']
+
+        Class_Eco = 0
+        Class_Eco_Plus = 0
+        if class_type == 'Eco':
+            Class_Eco = 1
+        elif class_type == 'Eco Plus':
+            Class_Eco_Plus = 1
 
         conn = get_db_connection()
         conn.execute('''
             INSERT INTO customer_satisfaction (
-                age, flight_distance, inflight_entertainment,baggage_handling, cleanliness, departure_delay,arrival_delay, gender, customer_type, class, type_of_travel) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''', (age, flight_distance, inflight_entertainment,baggage_handling, cleanliness, departure_delay,arrival_delay, gender, customer_type, class_,type_of_travel))
-
+                age, flight_distance, inflight_entertainment, baggage_handling, cleanliness,
+                departure_delay, arrival_delay, gender, customer_type, class, type_of_travel, Class_Eco, Class_Eco_Plus)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ''', (age, flight_distance, inflight_entertainment, baggage_handling, cleanliness,
+              departure_delay, arrival_delay, gender, customer_type, class_type, travel_type, Class_Eco, Class_Eco_Plus))
         conn.commit()
+
+        cursor = conn.execute('''
+            SELECT age, flight_distance, inflight_entertainment, baggage_handling, cleanliness,
+                   departure_delay, arrival_delay, gender, customer_type, type_of_travel, Class_Eco, Class_Eco_Plus
+            FROM customer_satisfaction
+            ORDER BY id DESC
+            LIMIT 1
+        ''')
+        latest_data = cursor.fetchone()
         conn.close()
-        
-        return redirect(url_for('index'))
+
+        latest_data_values = [
+            latest_data['age'],
+            latest_data['flight_distance'],
+            latest_data['inflight_entertainment'],
+            latest_data['baggage_handling'],
+            latest_data['cleanliness'],
+            latest_data['departure_delay'],
+            latest_data['arrival_delay'],
+            latest_data['gender'],
+            latest_data['customer_type'],
+            latest_data['type_of_travel'],
+            latest_data['Class_Eco'],
+            latest_data['Class_Eco_Plus']
+        ]
+
+        prediction = model.predict([latest_data_values])[0]
+        labels = {'1': 'SATISFIED', '0': 'DISSATISFIED'}
+        return render_template('output.html', output=labels[str(prediction)])
 
 if __name__ == '__main__':
     app.run(debug=True)

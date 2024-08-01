@@ -1,7 +1,7 @@
 import sqlite3
 
 def check_db():
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect('customer_satisfaction.db')
     cursor = conn.cursor()
 
     cursor.execute("PRAGMA table_info(customer_satisfaction)")

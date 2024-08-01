@@ -1,7 +1,7 @@
 import sqlite3
 
 def drop_table():
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect('customer_satisfaction.db')
     cursor = conn.cursor()
 
     cursor.execute("DROP TABLE IF EXISTS customer_satisfaction")
